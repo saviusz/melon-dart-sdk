@@ -1,0 +1,6 @@
+name: melon_sdk
+resolution: workspace
+dependencies: 
+  melon_core: ^0.0.0
+environment:
+  sdk: ^3.6.0
