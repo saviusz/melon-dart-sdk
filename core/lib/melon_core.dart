@@ -1,10 +1,11 @@
+import 'package:melon_core/artist.dart';
 import 'package:melon_core/song.dart';
 
 class MelonCore {
   final List<Song> _songs = [];
+  final List<Artist> _artists = [];
 
   Song createSong({required String title}) {
-
     if (title.isEmpty) {
       throw Exception('Title cannot be empty');
     }
@@ -29,5 +30,33 @@ class MelonCore {
 
   List<Song> getAllSongs() {
     return _songs.toList();
+  }
+
+  List<Artist> getAllArtists() {
+    return _artists.toList();
+  }
+
+  Artist createArtist({
+    String? name,
+    String? surname,
+    String? pseudonym,
+  }) {
+    final artist = Artist(
+      id: '---id---',
+      name: name,
+      surname: surname,
+      pseudonym: pseudonym,
+    );
+    _artists.add(artist);
+    return artist;
+  }
+
+  Artist getArtistById(String id) {
+    try {
+      final artist = _artists.firstWhere((artist) => artist.id == id);
+      return artist;
+    } catch (e) {
+      throw Exception('Artist not found');
+    }
   }
 }

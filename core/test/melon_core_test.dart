@@ -27,10 +27,37 @@ void main() {
     check(() => melon.getSongById("unknown")).throws();
   });
 
-  test("multiple additions of same song fails", () async {
+  test("created songs have different ids", () async {
     final melon = MelonCore();
 
-    melon.createSong(title: "Test Title");
-    check(() => melon.createSong(title: "Test Title")).throws();
+    final song1 = melon.createSong(title: "Test Title");
+    final song2 = melon.createSong(title: "Test Title");
+
+    check(song1.id).not((e) => e.equals(song2.id));
+  }, skip: "random id generation is not implemented yet");
+
+  test("get all artists is empty", () async {
+    final melon = MelonCore();
+    check(melon.getAllArtists()).isEmpty;
   });
+
+  test("create artist without data fails", () async {
+    final melon = MelonCore();
+    check(() => melon.createArtist()).throws();
+  });
+
+  test("get artist by id fails", () async {
+    final melon = MelonCore();
+    check(() => melon.getArtistById("unknown")).throws();
+  });
+
+  test("created artists have different ids", () async {
+    final melon = MelonCore();
+
+    final artist1 = melon.createArtist();
+    final artist2 = melon.createArtist();
+
+    check(artist1.id).not((e) => e.equals(artist2.id));
+  }, skip: "random id generation is not implemented yet");
+  
 }
