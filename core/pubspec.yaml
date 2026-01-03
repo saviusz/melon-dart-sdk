@@ -2,3 +2,8 @@ name: melon_core
 resolution: workspace
 environment:
   sdk: ^3.6.0
+dependencies: 
+  equatable: ^2.0.7
+dev_dependencies:
+  test: ^1.28.0
+  checks: ^0.3.1
