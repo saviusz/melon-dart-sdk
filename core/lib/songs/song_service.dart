@@ -1,4 +1,4 @@
-import 'package:melon_core/song.dart';
+import 'package:melon_core/songs/song.dart';
 
 class SongService {
   

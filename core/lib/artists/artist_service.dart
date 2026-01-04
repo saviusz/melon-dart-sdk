@@ -1,4 +1,4 @@
-import 'package:melon_core/artist.dart';
+import 'package:melon_core/artists/artist.dart';
 
 class ArtistService {
   
