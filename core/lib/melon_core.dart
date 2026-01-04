@@ -1,11 +1,9 @@
 import 'package:melon_core/artists/artist_service.dart';
 import 'package:melon_core/songs/song_service.dart';
 
-class MelonCore  {
+class MelonCore {
+  MelonCore({required this.songService, required this.artistService});
 
-  final SongService _songService = SongService();
-  final ArtistService _artistService = ArtistService();
-
-  get songService => _songService;
-  get artistService => _artistService;
+  final SongService songService;
+  final ArtistService artistService;
 }
