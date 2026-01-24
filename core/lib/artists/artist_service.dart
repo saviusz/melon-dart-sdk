@@ -1,35 +1,34 @@
 import 'package:melon_core/artists/artist.dart';
+import 'package:melon_core/artists/artist_repository.dart';
+import 'package:melon_core/misc/snapshot.dart';
 
 class ArtistService {
-  
-  final List<Artist> _artists = [];
-  
-  List<Artist> getAllArtists() {
-    return _artists.toList();
+  ArtistService({
+    required ArtistRepository repo,
+  }) : _artists = repo;
+
+  final ArtistRepository _artists;
+
+  Stream<Snapshot<List<ArtistRecord>>> getAllArtists() async* {
+    yield* _artists.list();
   }
 
-  Artist createArtist({
+  Stream<Snapshot<ArtistRecord>> createArtist({
     String? name,
     String? surname,
     String? pseudonym,
-  }) {
-    final artist = Artist(
+  }) async* {
+    final artist = ArtistRecord(
       id: '---id---',
       name: name,
       surname: surname,
       pseudonym: pseudonym,
     );
-    _artists.add(artist);
-    return artist;
+
+    yield* _artists.add(artist);
   }
 
-  Artist getArtistById(String id) {
-    try {
-      final artist = _artists.firstWhere((artist) => artist.id == id);
-      return artist;
-    } catch (e) {
-      throw Exception('Artist not found');
-    }
+  Stream<Snapshot<ArtistRecord>> getArtistById(String id) async* {
+    yield* _artists.get(id);
   }
-
 }

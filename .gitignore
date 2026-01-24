@@ -1,5 +1,7 @@
 # Dart
 .dart_tool
+*.g.dart
+*.mocks.dart
 
 # Editors
 .vscode
