@@ -1,14 +1,16 @@
+import 'package:melon_core/artists/repository/artist_repository.dart';
+
 import '../artist.dart';
 import 'exceptions.dart';
 
 class ArtistService {
 
-  ArtistService([List<Artist>? artists]) : _artists = artists ?? []; 
+  ArtistService(ArtistRepository artists) : _artists = artists; 
   
-  final List<Artist> _artists;
+  final ArtistRepository _artists;
   
   Stream<List<Artist>> getAllArtists() async* {
-    yield _artists.toList();
+    yield* _artists.list();
   }
 
   Stream<Artist> createArtist({
@@ -25,25 +27,20 @@ class ArtistService {
       throw ArtistMissingDataException();
     }
 
+    final count = (await _artists.list().first).length;
+
     final artist = Artist(
-      id: '---id---',
+      id: count.toString(),
       name: name,
       surname: surname,
       pseudonym: pseudonym,
     );
 
-    _artists.add(artist);
-    yield artist;
+    yield* _artists.create(artist);
   }
 
   Stream<Artist> getArtistById(String id) async* {
-    final index = _artists.indexWhere((artist) => artist.id == id);
-    if (index == -1) {
-      throw ArtistNotFoundException(id);
-    } else {
-      final artist = _artists[index];
-      yield artist;
-    }
+    yield* _artists.get(id);
   }
 
 }
