@@ -1,12 +1,13 @@
 import 'package:melon_core/artists/repository/artist_repository.dart';
+import 'package:melon_core/misc/id_generator.dart';
 
 import '../artist.dart';
 import 'exceptions.dart';
 
 class ArtistService {
-
   ArtistService(ArtistRepository artists) : _artists = artists; 
   
+  final IdGenerator generator = IdGenerator(instanceId: 1);
   final ArtistRepository _artists;
   
   Stream<List<Artist>> getAllArtists() async* {
@@ -27,10 +28,8 @@ class ArtistService {
       throw ArtistMissingDataException();
     }
 
-    final count = (await _artists.list().first).length;
-
     final artist = Artist(
-      id: count.toString(),
+      id: generator.generate(),
       name: name,
       surname: surname,
       pseudonym: pseudonym,

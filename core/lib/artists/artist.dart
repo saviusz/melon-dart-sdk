@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
+import 'package:melon_core/misc/identifier.dart';
 
 class Artist extends Equatable {
-  final String id;
+  final Identifier id;
   final String? name;
   final String? surname;
   final String? pseudonym;
@@ -13,7 +14,7 @@ class Artist extends Equatable {
 
   factory Artist.fromJson(jsonDecode) {
     return Artist(
-      id: jsonDecode["id"],
+      id: Identifier.fromEncodedString(jsonDecode["id"]),
       name: jsonDecode["name"],
       surname: jsonDecode["surname"],
       pseudonym: jsonDecode["pseudonym"],
@@ -21,7 +22,7 @@ class Artist extends Equatable {
   }
 
   Map<String, dynamic> toJson() => {
-        "id": id,
+        "id": id.toEncodedString(),
         "name": name,
         "surname": surname,
         "pseudonym": pseudonym,

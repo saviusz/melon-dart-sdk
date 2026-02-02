@@ -38,7 +38,7 @@ void main() {
       final returnedArtist2 = artistSnapshots2.first;
   
       check(returnedArtist2.id).not((id) => id.equals(returnedArtist1.id));
-    }, skip: "id generator not implemented yet");
+    });
   
   });
 }
