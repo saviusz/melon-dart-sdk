@@ -46,6 +46,9 @@ class FileArtistRepository implements ArtistRepository {
   @override
   Stream<List<Artist>> list() async* {
     final directory = Directory(basePath);
+    if (!await directory.exists()) {
+      yield [];
+    }
     yield await directory
         .list()
         .where((entity) => entity.path.endsWith(".json"))
