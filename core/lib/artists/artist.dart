@@ -9,7 +9,7 @@ class Artist extends Equatable {
   Artist({required this.id, this.name, this.surname, this.pseudonym});
 
   @override
-  List<Object?> get props => ["id", "name", "surname", "pseudonym"];
+  List<Object?> get props => [id, name, surname, pseudonym];
 
   factory Artist.fromJson(jsonDecode) {
     return Artist(
@@ -26,5 +26,4 @@ class Artist extends Equatable {
         "surname": surname,
         "pseudonym": pseudonym,
       };
-
 }
