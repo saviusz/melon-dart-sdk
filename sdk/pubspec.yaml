@@ -1,7 +1,7 @@
 name: melon_sdk
 version: 0.0.1
 description: Melon SDK
-repository: https://github.com/saviusz/melon-sdk/sdk
+repository: https://github.com/saviusz/melon-dart-sdk/sdk
 resolution: workspace
 dependencies: 
   melon_core: ^0.0.1

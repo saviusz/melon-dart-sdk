@@ -1,7 +1,7 @@
 name: melon_core
 description: Melon Core
 version: 0.0.1
-repository: https://github.com/saviusz/melon-sdk/core
+repository: https://github.com/saviusz/melon-dart-sdk/core
 resolution: workspace
 environment:
   sdk: ^3.6.0
