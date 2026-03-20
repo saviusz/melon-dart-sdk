@@ -1,7 +1,6 @@
-name: _
-publish_to: none
+name: melon_sdk
+version: 0.0.1
+description: Melon SDK
+repository: https://github.com/saviusz/melon-dart-sdk
 environment:
   sdk: ^3.6.0
-workspace:
-  - core
-  - sdk 

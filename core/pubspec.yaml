@@ -1,4 +1,0 @@
-name: melon_core
-resolution: workspace
-environment:
-  sdk: ^3.6.0
