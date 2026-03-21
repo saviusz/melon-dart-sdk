@@ -1,0 +1,1 @@
+class EmptySongTitleException implements Exception {}

@@ -4,3 +4,8 @@ description: Melon SDK
 repository: https://github.com/saviusz/melon-dart-sdk
 environment:
   sdk: ^3.6.0
+dependencies:
+  equatable: ^2.0.8
+dev_dependencies:
+  test: ^1.31.0
+  spec: ^0.2.3
