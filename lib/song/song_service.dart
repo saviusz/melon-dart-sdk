@@ -81,4 +81,12 @@ class SongService {
     _songs[currentIndex] = newSong;
     this._eventBus.add(PerformerAssigned(artist: artist, song: newSong));
   }
+
+  Future<Object?> getSong(String songId) async {
+    final index = _songs.indexWhere((song) => song.id == songId);
+    if (index == -1) {
+      throw SongNotFoundException();
+    }
+    return _songs.elementAt(index);
+  }
 }

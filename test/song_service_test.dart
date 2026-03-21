@@ -39,4 +39,28 @@ void main() {
     final songs = await songService.getSongs();
     expect(songs, isEmpty);
   });
+
+  group("Assign artist", () {
+    late String songId;
+    late String authorId;
+
+    setUp(() async {
+      authorId = await artistsService.createArtist(pseudonym: "Dummy");
+      songId = await songService.createSong(title: "Dummy");
+    });
+
+    test("Assign author", () async {
+      await songService.assignAuthor(songId, authorId);
+
+      final song = await songService.getSong(songId);
+      expect(song, isA<Song>().having((song) => song.authorIds, "authorIds", [authorId]));
+    });
+
+    test("Assign performer", () async {
+      await songService.assignPerformer(songId, authorId);
+
+      final song = await songService.getSong(songId);
+      expect(song, isA<Song>().having((song) => song.performerIds, "performerIds", [authorId]));
+    });
+  });
 }
