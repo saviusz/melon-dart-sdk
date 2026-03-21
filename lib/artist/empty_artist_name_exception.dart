@@ -1,1 +1,0 @@
-class EmptyArtistNameException implements Exception {}

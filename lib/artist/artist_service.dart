@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'artist.dart';
 import 'artist_list_event.dart';
-import 'empty_artist_name_exception.dart';
+import 'artist_exceptions.dart';
 
 class ArtistService {
 
@@ -42,4 +42,13 @@ class ArtistService {
       }
     }
   }
+
+  Future<Artist> getArtist(String authorId) async {
+    final index = _artists.indexWhere((artist) => artist.id == authorId);
+    if (index == -1) {
+      throw ArtistNotFoundException();
+    }
+    return _artists[index];
+  }
+
 }
