@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:melon_sdk/artist/index.dart';
+import 'package:melon_sdk/util/id/id.dart';
+import 'package:melon_sdk/util/id/id_generator.dart';
 
 import 'expections.dart';
 import 'song.dart';
@@ -8,26 +10,28 @@ import 'song_list_event.dart';
 
 class SongService {
 
-  SongService({required this.artists});
+  SongService({required this.artists, required IdGenerator idGenerator}) : _idGenerator = idGenerator;
 
   final ArtistService artists;
+  final IdGenerator _idGenerator;
 
   final _eventBus = StreamController<SongListEvent>.broadcast();
   
   final List<Song> _songs = [];
+  
 
 
   Future<void> dispose() async {
     await _eventBus.close();
   }
 
-  Future<String> createSong({required String title}) async {
+  Future<ID> createSong({required String title}) async {
     
     if (title.isEmpty) {
       throw EmptySongTitleException();
     }
     
-    final id = "";
+    final id = _idGenerator.generate();
     final song = Song(id: id, title: title);
 
     _songs.add(song);
@@ -49,7 +53,7 @@ class SongService {
     return _songs;
   }
 
-  Future<void> assignAuthor(String songId, String authorId) async {
+  Future<void> assignAuthor(ID songId, ID authorId) async {
     final currentIndex = _songs.indexWhere((song) => song.id == songId);
 
     if (currentIndex == -1) {
@@ -66,7 +70,7 @@ class SongService {
     this._eventBus.add(AuthorAssigned(artist: artist, song: newSong));
   }
 
-  Future<void> assignPerformer(String songId, String performerId) async {
+  Future<void> assignPerformer(ID songId, ID performerId) async {
     final currentIndex = _songs.indexWhere((song) => song.id == songId);
 
     if (currentIndex == -1) {
@@ -82,7 +86,7 @@ class SongService {
     this._eventBus.add(PerformerAssigned(artist: artist, song: newSong));
   }
 
-  Future<Object?> getSong(String songId) async {
+  Future<Object?> getSong(ID songId) async {
     final index = _songs.indexWhere((song) => song.id == songId);
     if (index == -1) {
       throw SongNotFoundException();

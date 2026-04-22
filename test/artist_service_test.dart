@@ -2,11 +2,15 @@ import 'package:melon_sdk/artist/artist_exceptions.dart';
 import 'package:melon_sdk/artist/index.dart';
 import 'package:test/test.dart';
 
+
+import 'mocks/mock_id_generator.dart';
+
 void main() {
   late ArtistService artistsService;
 
   setUp(() {
-    artistsService = ArtistService();
+    final idGen = MockIdGenerator();
+    artistsService = ArtistService(idGenerator: idGen);
   });
 
   test("Create artist", () async {
@@ -30,7 +34,7 @@ void main() {
       pseudonym: "John Doe",
     );
 
-    expect(artistId, isNotEmpty, reason: "Artist id should not be empty");
+    expect(artistId.toString(), isNotEmpty, reason: "Artist id should not be empty");
 
     final artists = await artistsService.getArtists();
     expect(

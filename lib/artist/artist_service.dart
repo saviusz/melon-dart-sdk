@@ -1,17 +1,24 @@
 import 'dart:async';
 
+import 'package:melon_sdk/util/id/id.dart';
+import 'package:melon_sdk/util/id/id_generator.dart';
+
 import 'artist.dart';
 import 'artist_list_event.dart';
 import 'artist_exceptions.dart';
 
 class ArtistService {
 
+  final IdGenerator _idGenerator;
+
+  var counter = 0;
+
   final _eventBus = StreamController<ArtistListEvent>.broadcast();
   final _artists = <Artist>[];
 
-  ArtistService();
+  ArtistService({required IdGenerator idGenerator}) : _idGenerator = idGenerator;
 
-  Future<String> createArtist({String? name, String? surname, String? pseudonym}) async {
+  Future<ID> createArtist({String? name, String? surname, String? pseudonym}) async {
     
     if (
       (name == null || name.isEmpty) &&
@@ -21,7 +28,7 @@ class ArtistService {
       throw EmptyArtistNameException();
     }
     
-    final id = "";
+    final id = _idGenerator.generate();
     final artist = Artist(id: id, name: name, surname: surname, pseudonym: pseudonym);
     
     _artists.add(artist);
@@ -43,10 +50,10 @@ class ArtistService {
     }
   }
 
-  Future<Artist> getArtist(String authorId) async {
-    final index = _artists.indexWhere((artist) => artist.id == authorId);
+  Future<Artist> getArtist(ID artistId) async {
+    final index = _artists.indexWhere((artist) => artist.id == artistId);
     if (index == -1) {
-      throw ArtistNotFoundException();
+      throw ArtistNotFoundException(artistId: artistId);
     }
     return _artists[index];
   }

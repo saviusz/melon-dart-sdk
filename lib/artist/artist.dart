@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
+import 'package:melon_sdk/util/id/id.dart';
 
 class Artist extends Equatable {
-  final String id;
+  final ID id;
   final String? name;
   final String? surname;
   final String? pseudonym;

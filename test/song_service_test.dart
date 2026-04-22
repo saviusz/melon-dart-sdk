@@ -1,14 +1,18 @@
 import 'package:melon_sdk/index.dart';
 import 'package:melon_sdk/song/expections.dart';
+import 'package:melon_sdk/util/id/id.dart';
 import 'package:test/test.dart';
+
+import 'mocks/mock_id_generator.dart';
 
 void main() {
   late ArtistService artistsService;
   late SongService songService;
 
   setUp(() {
-    artistsService = ArtistService();
-    songService = SongService(artists: artistsService);
+    final idGen = MockIdGenerator();
+    artistsService = ArtistService(idGenerator: idGen);
+    songService = SongService(artists: artistsService, idGenerator: idGen);
   });
 
   tearDown(() async {
@@ -25,7 +29,7 @@ void main() {
         ]));
 
     final songId = await songService.createSong(title: title);
-    expect(songId, isNotEmpty, reason: "Song id should not be empty");
+    expect(songId.toString(), isNotEmpty, reason: "Song id should not be empty");
 
     final songs = await songService.getSongs();
     expect(songs, contains(new Song(id: songId, title: title)));
@@ -41,8 +45,8 @@ void main() {
   });
 
   group("Assign artist", () {
-    late String songId;
-    late String authorId;
+    late ID songId;
+    late ID authorId;
 
     setUp(() async {
       authorId = await artistsService.createArtist(pseudonym: "Dummy");
